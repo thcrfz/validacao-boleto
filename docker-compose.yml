@@ -1,0 +1,17 @@
+version: "3.7"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: base
+    volumes:
+      - ./src:/usr/app/src
+      - ./nodemon.json:/usr/app/nodemon.json
+    container_name: ewally-node-docker
+    expose:
+      - '8080'
+    ports:
+      - '8080:8080'
+    command: npm run dev
