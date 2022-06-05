@@ -1,17 +1,22 @@
-import express, {Express, Request, Response} from "express";
+import express, {Express} from "express";
+import home from './routes/home';
 
 export class App {
     app: Express;
 
     constructor() {
         this.app = express();
+        this.middlewares();
         this.routes();
     }
 
+    middlewares(): void {
+        this.app.use(express.urlencoded({extended: true}));
+        this.app.use(express.json());
+    }
+
     routes(): void {
-        this.app.get('/', (req: Request, res: Response) => {
-            res.send( 'Hot asdasd ');
-        })
+        this.app.use('/boleto', home)
     }
 }
 
