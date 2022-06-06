@@ -25,12 +25,13 @@ export class ModuleTenCalculation {
         return Math.ceil(number / 10) * 10;
     }
 
-    getDV(number: number): number {
+    getDV(number: string): number {
         let sum = 0;
         let remainder = 0;
         let dozen = 0
-        const field = number.toString().split('');
+        const field = number.split('');
         field.pop();
+        console.log(field)
         const array = this.calculateFieldOfNumber(field);
         if (array.length) {
             sum = this.getSumOfDigit(array);
@@ -39,6 +40,7 @@ export class ModuleTenCalculation {
         } else {
             throw Error('Campo inválido');
         }
+
         return dozen - remainder
     }
 }

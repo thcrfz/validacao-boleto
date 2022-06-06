@@ -1,20 +1,7 @@
 import {BarCode} from "../interfaces/barCode";
 
 export class CalculateModuleEleven{
-    getCodeBar = (id: string) => {
-        const barCode = {} as BarCode;
-
-        barCode.codigoBanco = id.slice(0, 3);
-        barCode.codigoMoeda = id.slice(3,4)
-        barCode.fatorVencimento = id.slice(33,37);
-        barCode.valor = id.slice(-10);
-        barCode.campoLivre = id.slice(4, 9) + id.slice(10, 20) + id.slice(21, 31);
-        const dv = this.getDv(barCode)
-        barCode.dv = dv == 0 || dv == 10 || dv == 11 ? '1' : dv.toString();
-        return barCode.codigoBanco + barCode.codigoMoeda + barCode.dv + barCode.fatorVencimento + barCode.valor + barCode.campoLivre;
-    }
-
-    getDv(barCode: BarCode){
+      getDv(barCode: BarCode){
         const code = barCode.codigoBanco + barCode.codigoMoeda + barCode.fatorVencimento + barCode.valor + barCode.campoLivre
         let sequencia = [4, 3, 2, 9, 8, 7, 6, 5];
         let digit = 0;
