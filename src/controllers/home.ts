@@ -27,13 +27,16 @@ class HomeController {
         const {id} = req.params;
         const barCode = CalculateModuleEleven.getCodeBar(id);
         const date = FatorVencimento.getDate(id);
+        const valor = id.slice(-10)
+        const valorCode = valor.replace(/^[0]+/,'');
+        const valorFormatado = valorCode.substring(0, valorCode.length - 2) + '.' + valorCode.substring(valorCode.length - 2)
 
         if (!checkModuleTen(id) && checkModuleEleven(barCode, id)) {
             return res.status(400).send('Digito verificador inválido')
         }
         return res.status(200).send({
             barCode: barCode,
-            amount: '',
+            amount: valorFormatado,
             expirationDate: date
         })
     }
