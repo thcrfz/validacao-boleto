@@ -9,8 +9,8 @@ export class CalculateModuleEleven{
         barCode.fatorVencimento = id.slice(33,37);
         barCode.valor = id.slice(-10);
         barCode.campoLivre = id.slice(4, 9) + id.slice(10, 20) + id.slice(21, 31);
-        barCode.dv = String(this.getDv(barCode))
-
+        const dv = this.getDv(barCode)
+        barCode.dv = dv == 0 || dv == 10 || dv == 11 ? '1' : dv.toString();
         return barCode.codigoBanco + barCode.codigoMoeda + barCode.dv + barCode.fatorVencimento + barCode.valor + barCode.campoLivre;
     }
 
@@ -29,7 +29,6 @@ export class CalculateModuleEleven{
         }
 
         DAC = digit % 11;
-
         if (DAC == 0 || DAC == 1)
             return 0;
         if (DAC == 10)

@@ -12,6 +12,8 @@ export const checkModuleTen = (id: string) => {
     const dvTwo = VerifyDigitModuleTen.getDV(parseInt(secondField));
     const dvThree = VerifyDigitModuleTen.getDV(parseInt(thirdField));
 
+    console.log(dvOne, dvTwo, dvThree)
+
     const firstFieldDV = parseInt(firstField.split('').pop() as string);
     const secondFieldDV = parseInt(secondField.split('').pop() as string);
     const thirdFieldDV = parseInt(thirdField.split('').pop() as string);
@@ -25,13 +27,20 @@ export const checkModuleEleven = (barCode: string, id: string) => {
 class HomeController {
     index(req: Request, res: Response) {
         const {id} = req.params;
+        if (id.length !== 47){
+            return res.status(400).send('Linha digitável inválida');
+        }
+
         const barCode = CalculateModuleEleven.getCodeBar(id);
         const date = FatorVencimento.getDate(id);
         const valor = id.slice(-10)
         const valorCode = valor.replace(/^[0]+/,'');
         const valorFormatado = valorCode.substring(0, valorCode.length - 2) + '.' + valorCode.substring(valorCode.length - 2)
 
-        if (!checkModuleTen(id) && checkModuleEleven(barCode, id)) {
+        if (barCode.length !== 44){
+            return res.status(400).send('Código de barras inválido');
+        }
+        if (!checkModuleTen(id) || !checkModuleEleven(barCode, id)) {
             return res.status(400).send('Digito verificador inválido')
         }
         return res.status(200).send({
