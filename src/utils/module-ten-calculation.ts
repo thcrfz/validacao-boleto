@@ -31,7 +31,6 @@ export class ModuleTenCalculation {
         let dozen = 0
         const field = number.toString().split('');
         field.pop();
-        console.log(field)
         const array = this.calculateFieldOfNumber(field);
         if (array.length) {
             sum = this.getSumOfDigit(array);
