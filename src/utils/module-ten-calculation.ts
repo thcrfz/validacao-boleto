@@ -1,5 +1,3 @@
-import {ModuleTen} from "../interfaces/module-ten";
-
 export class ModuleTenCalculation {
 
     private calculateFieldOfNumber(field: string[]): number[] {

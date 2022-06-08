@@ -1,27 +1,14 @@
 import {Request, Response} from "express";
-import VerifyDigitModuleTen from "../utils/module-ten-calculation";
-import CalculateModuleEleven from "../utils/calculateModuleEleven";
-import FatorVencimento from "../utils/calculateFatorVencimento";
-import {BarCode} from "../interfaces/barCode";
 import CodeBar from '../utils/getBarCode'
-
-export const checkModuleEleven = (barCode: string, id: string) => {
-    return barCode.slice(4, 5) === id.slice(32, 33);
-}
 
 class HomeController {
     index(req: Request, res: Response) {
         const {id} = req.params;
 
-        let CODE_TYPE = '';
         let BOLETO_TYPE = '';
         let MODULO = 0;
 
-        if (id.length === 47 || id.length === 48) {
-            CODE_TYPE = 'LINHA DIGITAVEL'
-        } else if (id.length === 44) {
-            CODE_TYPE = 'CODIGO DE BARRAS'
-        } else {
+        if (id.length < 47) {
             return res.status(400).send('Linha digitável inválida');
         }
 
@@ -65,6 +52,11 @@ class HomeController {
             console.log(response)
             return res.status(200).send(response)
         }
+        const response = CodeBar.getBoletoConcenssionaria(id, MODULO);
+        if (response.status == 400) {
+            return res.status(400).send('Código inválido')
+        }
+        return res.send(response);
     }
 }
 

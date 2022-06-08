@@ -1,4 +1,4 @@
-export interface BarCode{
+export interface BarCodeBoletoBancario{
     codigoBanco: string;
     codigoMoeda: string;
     dv: string;

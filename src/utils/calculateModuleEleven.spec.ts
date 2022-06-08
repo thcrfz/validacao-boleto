@@ -9,3 +9,14 @@ describe('Digito verificador modulo 11', () => {
     });
 
 })
+
+describe('Digito verificador geral para o boleto de concessionaria', () => {
+    afterEach(() => jest.clearAllMocks());
+    const sut = new CalculateModuleEleven();
+    const field = '84600000014359002402002405000243842210108114'
+    it('should return 7 as valid digit', function () {
+        sut.getDv(field);
+        // System under test
+        expect(sut.getDv(field)).toBe(7);
+    });
+})
